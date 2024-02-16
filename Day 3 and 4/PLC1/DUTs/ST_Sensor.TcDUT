@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ST_Sensor" Id="{2420591e-736c-44c8-a7a3-57248b43a6f0}">
+    <Declaration><![CDATA[TYPE ST_Sensor :
+STRUCT
+	rawTemp AT %I* : INT;
+	scaledTemp : REAL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

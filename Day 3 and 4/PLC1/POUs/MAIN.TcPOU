@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="MAIN" Id="{752f5c4e-fd2e-4946-8870-50266f7ca74a}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	ipot1OutputJeanPaul AT %Q* :INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[ ArrayStorage();
+ Case_Chase();
+ StructureTesting();
+ 
+ ipot1OutputJeanPaul := gvl.iPot1;
+ ]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="2" Count="0" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="13" Count="1" />
+      <LineId Id="19" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

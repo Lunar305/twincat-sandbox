@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="E_States" Id="{321704e8-5d9f-4141-b126-51b1858a9b46}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE E_States :
+(
+	oneSecondPress := 100,
+	threeCountPress := 200,
+	twoButtonPress := 300,
+	blinkingLight := 400,
+	oneSecondRelease := 410
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

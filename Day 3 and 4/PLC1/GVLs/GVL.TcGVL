@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <GVL Name="GVL" Id="{76db1b84-4a9f-4de5-9ab0-5048ca9c2a90}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	aSwitches 	AT %I* : ARRAY [1..8]OF BOOL;
+	aLights 	AT %Q* : ARRAY [1..8]OF BOOL;
+	iPot1 		AT %I* : INT;
+	iPot2		AT %I* : INT;
+	bReset		AT %I* : BOOL;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

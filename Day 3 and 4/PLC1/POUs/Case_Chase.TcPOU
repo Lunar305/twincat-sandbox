@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="Case_Chase" Id="{bd62304a-3955-432a-b9f0-15c5abb3f5ff}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Case_Chase
+VAR
+	iState : E_STATES;
+	ton1: TON;
+	ton2: TON;
+	ton3: TON;
+	ton4: TON;
+	fbCTU23: CTU;
+	fb_blink182: FB_Blink182;
+	f_trig400: F_TRIG;
+END_VAR
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE iState OF
+E_States.oneSecondPress:
+		ton1.IN:= GVL.aSwitches[5]; 
+		ton1.PT:=T#1S;
+		GVL.aLights[5] := 1;
+		IF ton1.Q = 1 THEN
+			ton1.IN:=0;
+			iState := E_States.threeCountPress; 
+			GVL.aLights[5] := 0;
+		END_IF
+E_States.threeCountPress:
+		GVL.aLights[6] := 1;
+		fbCTU23.CU := GVL.aSwitches[6];
+		fbCTU23(PV :=3);
+		fbCTU23(RESET := FALSE);
+		//ton2.IN:= GVL.aSwitches[6]; 
+		//ton2.PT:=T#1S;
+		IF fbCTU23.Q = 1 THEN
+			//ton2.IN:=0;
+			iState := E_States.twoButtonPress; 
+			GVL.aLights[6] := 0;
+			fbCTU23(RESET := TRUE);
+		END_IF 
+E_States.twoButtonPress:
+		//ton3.IN:= GVL.aSwitches[7]; 
+		//ton3.PT:=T#1S;
+		GVL.aLights[7] := 1;
+		IF GVL.aSwitches[5] AND GVL.aSwitches[6] THEN
+			//ton3.IN:=0;
+			iState := E_States.blinkingLight; 
+			GVL.aLights[7]:= 0;
+		END_IF
+E_States.blinkingLight:
+		fb_blink182(in:= NOT GVL.aSwitches[8], blink182PerSecond:= 2, Q=> GVL.aLights[8] );
+		IF GVL.aSwitches[8] THEN
+			iState := E_States.oneSecondRelease;
+		END_IF
+		
+E_States.oneSecondRelease: 
+		GVL.aLights[8] := TRUE;
+		 IF NOT GVL.aSwitches[8] THEN
+			ton4(IN := TRUE);
+			ton4(PT:=T#1S);
+		END_IF
+			
+		IF 	ton4.Q = TRUE THEN
+			ton4(IN := FALSE);
+			GVL.aLights[8] := FALSE;
+			iState := E_States.oneSecondPress;
+			
+		END_IF
+END_CASE
+
+ton1();
+ton2();
+ton3();
+ton4();]]></ST>
+    </Implementation>
+    <LineIds Name="Case_Chase">
+      <LineId Id="5" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="44" Count="1" />
+      <LineId Id="49" Count="1" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="103" Count="0" />
+      <LineId Id="109" Count="1" />
+      <LineId Id="112" Count="0" />
+      <LineId Id="78" Count="1" />
+      <LineId Id="81" Count="2" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="111" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="84" Count="5" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="90" Count="0" />
+      <LineId Id="146" Count="2" />
+      <LineId Id="144" Count="1" />
+      <LineId Id="92" Count="0" />
+      <LineId Id="152" Count="0" />
+      <LineId Id="156" Count="0" />
+      <LineId Id="166" Count="0" />
+      <LineId Id="165" Count="0" />
+      <LineId Id="157" Count="1" />
+      <LineId Id="168" Count="0" />
+      <LineId Id="167" Count="0" />
+      <LineId Id="163" Count="0" />
+      <LineId Id="162" Count="0" />
+      <LineId Id="160" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="97" Count="0" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="98" Count="2" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

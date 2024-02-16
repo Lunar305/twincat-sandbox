@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_Blink182" Id="{6e76a344-cecc-4b43-8dfe-21f83c90b859}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Blink182
+VAR_INPUT
+	in : BOOL;
+	blink182PerSecond : INT;
+END_VAR
+
+VAR_OUTPUT
+	Q : BOOL;
+END_VAR
+
+VAR
+	pulse1: TON;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[pulse1(IN:= in , PT:= T#1S/(blink182PerSecond*2) , Q=>  , ET=> );
+
+IF pulse1.Q THEN
+	Q := NOT Q;
+	pulse1(IN:= FALSE);
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="FB_Blink182">
+      <LineId Id="9" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="19" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

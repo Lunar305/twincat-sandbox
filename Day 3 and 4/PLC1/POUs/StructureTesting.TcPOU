@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="StructureTesting" Id="{eecc1e57-15ee-49ce-a821-140cee8fcfdc}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM StructureTesting
+VAR
+	aSensors : ARRAY[1..2] OF ST_Sensor;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//aSensors[1].scaledTemp := (aSensors[1].rawTemp)/327.67;
+//aSensors[2].scaledTemp := (aSensors[2].rawTemp)/
+
+aSensors[1].scaledTemp := F_Scaling(rawInput:= aSensors[1].rawTemp );]]></ST>
+    </Implementation>
+    <LineIds Name="StructureTesting">
+      <LineId Id="5" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="13" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

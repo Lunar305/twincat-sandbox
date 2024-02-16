@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="ArrayStorage" Id="{214e300a-074e-4623-b554-222b752a279c}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM ArrayStorage
+VAR
+	aPotValues : ARRAY [lowBound..highBound] OF INT ;
+	i: INT :=1;
+	ftrig1: F_TRIG;
+	rtrig1: R_TRIG;
+END_VAR
+
+VAR CONSTANT
+	lowBound : 	INT := 1;
+	highBound : INT := 5;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF GVL.aSwitches[1] AND i>=lowBound AND i<=highBound THEN 
+	aPotValues[i] := GVL.iPot1;
+END_IF
+
+ftrig1(CLK:= GVL.aSwitches[1]);
+
+
+IF ftrig1.Q AND i>=lowBound AND i<highBound THEN
+	i := i+1;
+END_IF
+
+IF gvl.bReset THEN
+	FOR i:= lowBound TO highBound DO
+		aPotValues[i] := 0;
+	END_FOR
+	i := lowBound;
+	END_IF
+	
+rtrig1(CLK:= GVL.aSwitches[2]);
+	
+IF rtrig1.Q THEN
+	i := i-1;
+	IF i>= lowBound AND i<= highBound THEN
+		aPotValues[i] := 0;
+	END_IF
+	IF i < lowBound THEN
+		i := lowBound;
+	END_IF
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="ArrayStorage">
+      <LineId Id="5" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="50" Count="1" />
+      <LineId Id="54" Count="1" />
+      <LineId Id="64" Count="1" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="60" Count="2" />
+      <LineId Id="68" Count="2" />
+      <LineId Id="56" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

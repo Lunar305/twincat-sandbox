@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="F_ScalingByRef" Id="{06cb1697-cea5-4e69-b245-5af5ab9427a8}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION F_ScalingByRef : BOOL
+VAR_INPUT
+	entireSensor : REFERENCE TO ST_Sensor;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF entireSensor.rawTemp >=0 THEN
+	entireSensor.scaledTemp := (entireSensor.rawTemp/327.67);
+	F_ScalingByRef := TRUE;
+	RETURN;
+ELSE
+	F_ScalingByRef:=FALSE;
+	
+END_IF
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="F_ScalingByRef">
+      <LineId Id="9" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="14" Count="3" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
